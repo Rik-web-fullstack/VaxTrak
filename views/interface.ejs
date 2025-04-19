@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 30px;
+        }
+        .column {
+            width: 45%;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h2 {
+            text-align: center;
+        }
+        #hospitalSection {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <select id="memberSelect">
+        <option value="" disabled selected>Select a member</option>
+        <% extract_member.forEach(function(member, index) { %>
+          <option value="<%= index %>"><%= member.name %></option>
+        <% }) %>
+    </select>
+
+    <div id="memberDataContainer">
+        <% extract_member.forEach(function(member, index) { %>
+          <div class="memberData" id="member-<%= index %>" style="display:none;">
+            <h3><%= member.name %></h3>
+            <h4>Vaccines Already Taken</h4>
+            <ul>
+              <% member.vaccines_taken.forEach(function(vaccine){ %>
+                <li><%= vaccine %></li>
+              <% }) %>
+            </ul>
+          </div>
+        <% }) %>
+    </div>
+<!-- vaccines recommended-->
+<div id="recommendedVaccinesContainer">
+    <h4>Vaccines recommended</h4>
+    <div id="recommendedVaccines"></div>
+</div>
+
+<br>
+<button id="bookBtn">Book appointment</button>
+
+    <!-- Hidden Hospital Section -->
+    <div id="hospitalSection" style="display: none;">
+        <div class="container">
+            <div class="column" id="paidHospitalsColumn">
+                <h2>Paid Hospitals</h2>
+            </div>
+            <div class="column" id="freeHospitalsColumn">
+                <h2>Free Hospitals</h2>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <input type="text" id="geminiPrompt" placeholder="Ask about vaccines or healthcare...">
+        <button id="askGemini">Ask Gemini</button>
+    </div>
+    <div id="geminiResponse" style="margin-top: 20px; font-weight: bold;"></div>
+    
+
+    <a href="/logout">logout</a>
+    <script>
+    const members = <%- JSON.stringify(extract_member) %>;
+    const allHospitals = <%- JSON.stringify(paidHospitals.concat(freeHospitals)) %>;
+    const recommendedMap = <%- JSON.stringify(recommendedMap) %>;
+    </script>
+    
+    <script src="/javascripts/interface_management.js"></script>
+</body>
+</html>

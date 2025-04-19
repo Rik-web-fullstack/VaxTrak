@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/added_hospital" method="post">
+        <input type="text" name="hos_name" placeholder="Hospital Name">
+        <input type="text" name="hos_email" placeholder="Enter Email">
+        <input type="text" name="hos_phone" placeholder="Enter Phone">
+        <select name="hos_category">
+            <option value="Paid">Paid</option>
+            <option value="Free">Free</option>
+        </select>
+        <label><input type="checkbox" name="hos_vaccines" value="Covishield"> Covishield</label><br>
+        <label><input type="checkbox" name="hos_vaccines" value="Covaxin"> Covaxin</label><br>
+        <label><input type="checkbox" name="hos_vaccines" value="Polio"> Polio</label><br>
+        <label><input type="checkbox" name="hos_vaccines" value="Booster"> Booster Dose</label><br><br>
+        <input type="text" name="address_1" placeholder="Address">
+        <input type="text" name="street" placeholder="Street">
+        <input type="text" name="city" placeholder="City">
+        <input type="text" name="state" placeholder="State">
+        <input type="text" name="pincode" placeholder="pincode">
+        <input type="submit" name="submit" placeholder="submit">
+        
+    </form>
+</body>
+</html>

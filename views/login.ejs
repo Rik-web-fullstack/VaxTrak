@@ -1,0 +1,48 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/login_user" method="post">
+        <input type="text" name="email" placeholder="email">
+        <input type="password" name="password" placeholder="password">
+        <input type="submit" name="submit" placeholder="submit">
+    </form>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In page</title>
+    <link rel="stylesheet" href="/stylesheets/login.css">
+</head>
+<body>
+    <div id="main_body">
+
+        <div id="side_bar">
+            <div id="register_bar">
+                <div id="register_text">
+                    <h3 >Sign In</h3>
+                </div>
+                <form id="register_body" action="/login_user" method="post">
+                        <label for="email">Email: </label>
+                        <input type="email" name="email" id="email" placeholder=" abc@gmail.com" required>
+                    <br>
+                        <label for="password" >password:</label>
+                        <input type="password" name="password" id="password" placeholder="ab@203" required>
+                        <br>
+                        <button class="confirm" type="submit">Sign In</button>
+                        <br>
+                        <a href="/register" id="redirect">New Here? Sign up</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>register page</title>
+    <link rel="stylesheet" href="/stylesheets/registration.css">
+</head>
+<body>
+    <div id="main_body">
+
+        <div id="side_bar">
+            <div id="register_bar">
+                <div id="register_text">
+                    <h3 >Create Account</h3>
+                </div>
+                <form id="register_body" action="/register_user" method="post">
+                        <label for="email">Email: </label>
+                        <input type="email" id="email" placeholder=" abc@gmail.com" name="email" required>
+                    <br>
+                        <label for="phone_no" >Phone no:</label>
+                        <input type="tel" name="phone" id="phone_no" placeholder="123 456 7890" required>
+                        <br>
+                        <label for="password" >password:</label>
+                        <input type="password" name="password" id="password" placeholder="ab@203" required>
+                        <br>
+                        <label for="re_password" >Confirm password:</label>
+                        <input type="password" name="confirm_password" id="re_password" placeholder="ab@203" required >
+                        <br>
+                        <button class="confirm" type="submit" name="submit">Register</button>
+                        <br>
+                        <a href="/login" id="redirect">Already Registered? Sign in</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Site</title>
+</head>
+<body>
+    <form id="vaccineForm">
+        <input type="text" id="vaccineName" placeholder="Vaccine Name">
+        <input type="number" id="minAge" placeholder="Min Age">
+        <input type="number" id="maxAge" placeholder="Max Age">
+        <input type="submit" value="Add Vaccine">
+    </form>
+
+    <script>
+        document.getElementById("vaccineForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("vaccineName").value.trim();
+            const minAge = parseInt(document.getElementById("minAge").value);
+            const maxAge = parseInt(document.getElementById("maxAge").value);
+
+            if (!name || isNaN(minAge) || isNaN(maxAge)) {
+                return alert("Please enter valid vaccine name and age range.");
+            }
+
+            const vaccineData = {
+                vaccines: [{ name, minAge, maxAge }]
+            };
+
+            fetch('/add_vaccines', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(vaccineData)
+            })
+            .then(res => res.text())
+            .then(data => {
+                alert("Vaccine added successfully!");
+                console.log(data);
+            })
+            .catch(err => {
+                alert("Error adding vaccine");
+                console.error(err);
+            });
+        });
+    </script>
+</body>
+</html>

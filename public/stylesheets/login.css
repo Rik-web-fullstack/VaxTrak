@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+body{
+    display: flex;
+}
+
+#main_body{
+    flex:1;
+    background-color: #27374d;
+    height: 100vh;
+    width:100vw;
+}
+
+
+#side_bar{
+    background-color: #9db2bf;
+    height: 100vh;
+    width:30vw;
+
+    position: absolute;
+    right:0px;
+    display: flex;
+    justify-content: center;
+}
+
+#register_bar{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    position: relative;
+    width:80% ;
+    height: 80%;
+    background-color: #526d82;
+    border-radius: 20px;
+}
+
+#register_text{
+    width:100%;
+    height:15%;
+    margin-top: 15px;
+    display: flex;
+    flex-direction:column-reverse;
+    justify-content: space-between;
+    border-bottom: 1px solid white;
+}
+
+#register_text h3{
+    align-self: flex-start;
+    margin-left:10px;
+    font-size:xx-large;
+    color: aliceblue;
+}
+
+#register_body{
+    display: flex;
+    flex-direction: column;
+    color: aliceblue;
+    height: 80%;
+    padding-top: 20px;
+    padding-left: 10px;
+}
+
+#email,#password{
+    width:90%;
+    height: 30px;
+    border-radius: 15px;
+    margin-top: 3px;
+}
+
+.confirm{
+    width:70%;
+    height:30px;
+    border-radius: 30px;
+    margin-top: 20px;
+    align-self: center;
+
+}
+
+.confirm:hover{
+    background-color: #27374d;
+    color: aliceblue;
+    font-weight: bold;
+}
+
+#redirect{
+    color: aliceblue;
+    align-self: center;
+    text-decoration: none;
+}
