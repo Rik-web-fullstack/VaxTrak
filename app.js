@@ -33,7 +33,6 @@ app.get("/",(req,res)=>{
     res.render("animate")
 })
 
-
 app.get("/register",(req,res)=>{
     res.render("register_user")
 })
@@ -42,9 +41,9 @@ app.get("/add_member",async(req,res)=>{
     res.render("add_member")
 })
 
-app.get("/login",async(req,res)=>{
-    res.render("login")
-})
+// app.get("/login",async(req,res)=>{
+//     res.render("login")
+// })
 app.get("/add_hospital",(req,res)=>{
     res.render("add_hospital")
 })
@@ -122,11 +121,11 @@ app.post("/login_user", async (req, res) => {
 
 app.get("/logout",async(req,res)=>{
     res.cookie("token","")
-    res.redirect("/login")
+    res.redirect("/register")
 })
 
-app.get("/interface",isLogged, async (req, res) => {
-    //if (!req.session.userId) return res.redirect("/login");
+app.get("/interface",async (req, res) => {
+    if (!req.session.userId) return res.redirect("/login");
     const extract_member = await memberModel.find({ user: req.session.userId });
     const allHospitals = await hospitalModel.find();
     const paidHospitals = allHospitals.filter(h => h.hos_category === "Paid");

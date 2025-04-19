@@ -6,6 +6,6 @@ function restartAnimation() {
   }
 
 setTimeout(() => {
-    window.location.href = "/login"; 
+    window.location.href = "/register"; 
   }, 3000); 
   

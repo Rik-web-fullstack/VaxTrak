@@ -1,39 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>register page</title>
-    <link rel="stylesheet" href="/stylesheets/registration.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VaxTrak — Login & Register</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="gg.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <style>
+    .transition-container {
+      transition: transform 0.6s ease-in-out;
+    }
+  </style>
 </head>
-<body>
-    <div id="main_body">
+<body class="bg-primary flex items-center justify-center min-h-screen p-4 relative overflow-hidden">
 
-        <div id="side_bar">
-            <div id="register_bar">
-                <div id="register_text">
-                    <h3 >Create Account</h3>
-                </div>
-                <form id="register_body" action="/register_user" method="post">
-                        <label for="email">Email: </label>
-                        <input type="email" id="email" placeholder=" abc@gmail.com" name="email" required>
-                    <br>
-                        <label for="phone_no" >Phone no:</label>
-                        <input type="tel" name="phone" id="phone_no" placeholder="123 456 7890" required>
-                        <br>
-                        <label for="password" >password:</label>
-                        <input type="password" name="password" id="password" placeholder="ab@203" required>
-                        <br>
-                        <label for="re_password" >Confirm password:</label>
-                        <input type="password" name="confirm_password" id="re_password" placeholder="ab@203" required >
-                        <br>
-                        <button class="confirm" type="submit" name="submit">Register</button>
-                        <br>
-                        <a href="/login" id="redirect">Already Registered? Sign in</a>
-                </form>
-            </div>
-        </div>
+  <!-- Animated Vaccine Icons -->
+  <div class="absolute w-8 h-8 bg-accent rounded-full animate-bounce" style="top:10%; left:5%;"></div>
+  <div class="absolute w-8 h-8 bg-accent rounded-full animate-ping" style="top:80%; left:15%;"></div>
+  <div class="absolute w-8 h-8 bg-accent rounded-full animate-bounce" style="top:30%; left:90%; animation-delay:1s;"></div>
+
+  <div class="bg-white shadow-2xl rounded-2xl w-full max-w-4xl overflow-hidden flex ring-4 ring-primary">
+
+    <!-- Info Panel -->
+    <div class="w-1/2 bg-primary text-white p-8 flex flex-col justify-center">
+      <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.3.0/dist/dotlottie-wc.js" type="module"></script>
+      <dotlottie-wc src="https://lottie.host/32c8ff03-6cad-4c70-b79e-7137b28c0d80/f0i31GcssE.lottie" autoplay loop style="height: 100%; width: 100%;"></dotlottie-wc>
     </div>
+
+    <!-- Form Slide Section -->
+    <div class="w-1/2 overflow-hidden relative">
+      <div id="formSlider" class="w-[200%] flex transition-container transform translate-x-0">
+
+        <!-- Login Form -->
+        <div class="w-1/2 p-8 flex flex-col gap-4 bg-white text-dark">
+          <h2 class="text-3xl font-bold mb-4">Welcome Back!</h2>
+          <form class="flex flex-col gap-4 animate-fade-in" action="/login_user" method="post">
+            <input type="email" name="email" placeholder="Email" class="px-4 py-2 rounded bg-gray-100 focus:ring-2 ring-accent outline-none" required />
+            <div class="relative">
+              <input type="password" name="password" id="loginPassword" placeholder="Password" class="px-4 py-2 rounded bg-gray-100 focus:ring-2 ring-accent outline-none w-full pr-10" required />
+              <button type="button" onclick="toggleVisibility('loginPassword')" class="absolute right-2 top-2 text-accent"><i class="fa-solid fa-eye"></i></button>
+            </div>
+            <button type="submit" class="bg-accent text-primary py-2 rounded-full hover:scale-105 transition-transform duration-200" style="border: 2px black solid;">Login</button>
+          </form>
+          <p class="mt-4 text-sm">Don’t have an account? <a href="#" onclick="slideTo('register')" class="text-accent underline">Register</a></p>
+        </div>
+
+        <!-- Register Form -->
+        <div class="w-1/2 p-8 flex flex-col gap-4 bg-white text-dark">
+          <h2 class="text-3xl font-bold mb-4">Create Account</h2>
+          <form class="flex flex-col gap-4 animate-fade-in" action="/register_user" method="post">
+            <input name="email" type="email" placeholder="Email" class="px-4 py-2 rounded bg-gray-100 focus:ring-2 ring-accent outline-none" required />
+            <input name="phone" type="tel" placeholder="Phone Number" class="px-4 py-2 rounded bg-gray-100 focus:ring-2 ring-accent outline-none" required />
+            <div class="relative">
+              <input name="password" type="password" id="registerPassword" placeholder="Set Password" class="px-4 py-2 rounded bg-gray-100 focus:ring-2 ring-accent outline-none w-full pr-10" required />
+              <button type="button" onclick="toggleVisibility('registerPassword')" class="absolute right-2 top-2 text-accent"><i class="fa-solid fa-eye"></i></button>
+            </div>
+            <div class="relative">
+              <input name="confirm_password" type="password" id="confirmPassword" placeholder="Confirm Password" class="px-4 py-2 rounded bg-gray-100 focus:ring-2 ring-accent outline-none w-full pr-10" required />
+              <button type="button" onclick="toggleVisibility('confirmPassword')" class="absolute right-2 top-2 text-accent"><i class="fa-solid fa-eye"></i></button>
+            </div>
+            <button type="submit" class="bg-accent text-primary py-2 rounded-full hover:scale-105 transition-transform duration-200" style="border: 2px black solid; ">Register</button>
+          </form>
+          <p class="mt-4 text-sm">Already have an account? <a href="#" onclick="slideTo('login')" class="text-accent underline">Login</a></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Animation Styles -->
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    .animate-slide-in {
+      animation: slideIn 0.6s ease-out;
+    }
+    .delay-200 {
+      animation-delay: 0.2s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+  </style>
+
+  <script>
+    function slideTo(form) {
+      const slider = document.getElementById('formSlider');
+      slider.style.transform = form === 'register' ? 'translateX(-50%)' : 'translateX(0%)';
+    }
+
+    function toggleVisibility(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+  </script>
 </body>
 </html>
-
