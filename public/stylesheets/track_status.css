@@ -1,0 +1,222 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+  }
+  
+  body {
+    background: #f0f4f8;
+    color: #222;
+    line-height: 1.6;
+  }
+  
+  /* Header Placeholder */
+  header {
+    height: 60px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Main Grid Layout */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    padding: 40px;
+    padding-right: 0px;
+    align-items: start; /* ensures top alignment */
+  }
+  
+  @media (max-width: 900px) {
+    .main-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* Section Headings */
+  .vaccine-tracker-section h1
+   {
+    font-size: 2rem;
+    color: #27374d;
+    margin-bottom: 15px;
+  }
+  
+  /* Family Member Selector */
+  .family-select {
+    margin-bottom: 25px;
+  }
+  
+  .family-select label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+    display: inline-block;
+  }
+  
+  .family-select select {
+    padding: 10px;
+    width: 250px;
+    border: 2px solid #9db2bf;
+    border-radius: 8px;
+    background: #e6f0ff;
+    font-size: 1rem;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .family-select select:hover {
+    box-shadow: 0 0 8px rgba(63, 135, 245, 0.4);
+  }
+  
+  /* Tracker Section Cards */
+  .tracker-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 0.8s ease-in;
+  }
+  
+  .group-card {
+    background: linear-gradient(135deg, #ffffff, #e6f0ff);
+    border-left: 10px solid #9db2bf;
+    border-radius: 12px;
+    padding: 20px 25px;
+    box-shadow: 0 8px 20px rgba(63, 135, 245, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .group-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(63, 135, 245, 0.25);
+  }
+  
+  .group-card h2 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    background: #526d82;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .group-card label {
+    display: flex;
+    align-items: center;
+    background: #f2f8ff;
+    padding: 10px 15px;
+    border: 1px solid #dce7f3;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+  
+  .group-card label:hover {
+    background-color: #dbe9ff;
+    transform: translateX(5px);
+  }
+  
+  input[type="checkbox"] {
+    accent-color: #9db2bf;
+    transform: scale(1.2);
+    margin-right: 10px;
+  }
+  
+  /* Appointment Booking */
+  /* Updated Appointment Section */
+  .appointment-section {
+    background: linear-gradient(135deg, #dbeeff, #f0f8ff);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 98, 255, 0.15);
+    align-self: flex-start;
+    width: 400px;
+    margin-top: 140px;
+  }
+  
+  .appointment-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #27374d;
+  }
+  
+  .appointment-section label {
+    font-weight: 600;
+    color: #526d82;
+    margin-top: 12px;
+    display: block;
+  }
+  
+  .appointment-section input,
+  .appointment-section select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 2px solid #80bfff;
+    border-radius: 6px;
+    background-color: #e6f2ff;
+    transition: box-shadow 0.3s ease;
+    font-size: 1rem;
+  }
+  
+  .appointment-section input:hover,
+  .appointment-section select:hover {
+    box-shadow: 0 0 6px rgba(0, 98, 255, 0.3);
+  }
+  
+  .appointment-section button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(90deg, #3399ff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .appointment-section button:hover {
+    background: linear-gradient(90deg, #526d82, #1a8cff);
+    transform: scale(1.03);
+  }
+  
+  #confirmationMsg {
+    margin-top: 10px;
+    font-weight: 600;
+    color: #0077cc;
+  }
+  
+  
+  
+  /* Confirmation Message */
+  #confirmationMsg {
+    margin-top: 15px;
+    font-weight: 600;
+  }
+  
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    color: #666;
+    background-color: #ffffff;
+    border-top: 1px solid #ddd;
+  }
+  
+  /* Smooth Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

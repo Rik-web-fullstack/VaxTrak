@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Choose Hospital</title>
+  <link rel="stylesheet" href="/stylesheets/hospital-style.css" />
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <h2>HealthCare Portal</h2>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Select Your Preferred Hospital</h1>
+
+    <div class="box-container">
+      <!-- Free Hospitals -->
+      <div class="box">
+        <div class="box-header">
+          <h2>Free</h2>
+        </div>
+        <ul id="freeHospitalsColumn" class="hospital-list static-list">
+          <!-- <li onclick="selectHospital('free', 'City General Hospital')">City General Hospital</li>
+          <li onclick="selectHospital('free', 'Green Valley Clinic')">Green Valley Clinic</li>
+          <li onclick="selectHospital('free', 'Sunrise Public Health Center')">Sunrise Public Health Center</li>
+          <li onclick="selectHospital('free', 'Riverside Government Hospital')">Riverside Government Hospital</li>
+          <li onclick="selectHospital('free', 'Lakeside Community Clinic')">Lakeside Community Clinic</li>
+          <li onclick="selectHospital('free', 'Riverbend Medical Center')">Riverbend Medical Center</li>
+          <li onclick="selectHospital('free', 'Hillview General Hospital')">Hillview General Hospital</li>
+          <li onclick="selectHospital('free', 'North Valley Health Center')">North Valley Health Center</li>
+          <li onclick="selectHospital('free', 'Evergreen State Hospital')">Evergreen State Hospital</li>
+          <li onclick="selectHospital('free', 'Meadowfield Public Health')">Meadowfield Public Health</li>
+          <li onclick="selectHospital('free', 'Sunrise Community Care')">Sunrise Community Care</li>
+          <li onclick="selectHospital('free', 'Pinecrest General Hospital')">Pinecrest General Hospital</li>
+          <li onclick="selectHospital('free', 'Brookside Regional Clinic')">Brookside Regional Clinic</li>
+          <li onclick="selectHospital('free', 'Cedar Hill Wellness Center')">Cedar Hill Wellness Center</li> -->
+
+        </ul>
+      </div>
+
+      <!-- Paid Hospitals -->
+      <div class="box">
+        <div class="box-header">
+          <h2>Paid</h2>
+        </div>
+        <ul id="paidHospitalsColumn" class="hospital-list static-list">
+          <!-- <li onclick="selectHospital('paid', 'St. Mary\'s Premium Care')">St. Mary's Premium Care</li>
+          <li onclick="selectHospital('paid', 'NovaLife Private Hospital')">NovaLife Private Hospital</li>
+          <li onclick="selectHospital('paid', 'Grand Medix Center')">Grand Medix Center</li>
+          <li onclick="selectHospital('paid', 'Skyline Specialty Clinic')">Skyline Specialty Clinic</li>
+          <li onclick="selectHospital('paid', 'Elite Health Plaza')">Elite Health Plaza</li>
+          <li onclick="selectHospital('paid', 'Elite Health Plaza')">Elite Health Plaza</li>
+          <li onclick="selectHospital('paid', 'NovaLife Private Hospital')">NovaLife Private Hospital</li>
+          <li onclick="selectHospital('paid', 'Starlight Medical Institute')">Starlight Medical Institute</li>
+          <li onclick="selectHospital('paid', 'VitaCare Premium Hospital')">VitaCare Premium Hospital</li>
+          <li onclick="selectHospital('paid', 'Grand Medix Center')">Grand Medix Center</li>
+          <li onclick="selectHospital('paid', 'Skyline Specialty Clinic')">Skyline Specialty Clinic</li>
+          <li onclick="selectHospital('paid', 'MedElite Diagnostic & Surgical')">MedElite Diagnostic & Surgical</li>
+          <li onclick="selectHospital('paid', 'Sunhill Private Health Center')">Sunhill Private Health Center</li>
+          <li onclick="selectHospital('paid', 'Orchid International Hospital')">Orchid International Hospital</li>
+          <li onclick="selectHospital('paid', 'HarborView Medical Pavilion')">HarborView Medical Pavilion</li> -->
+        </ul>
+      </div>
+    </div>
+
+    <button id="proceedBtn" onclick="goToPayment()" disabled>Proceed to Payment</button>
+  </main>
+
+  <script src="/javascripts/hospital-script.js"></script>
+</body>
+</html>

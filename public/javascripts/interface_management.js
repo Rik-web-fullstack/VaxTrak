@@ -26,6 +26,9 @@
         document.getElementById('member-' + this.value).style.display = 'block';
     });
 
+
+
+
     // Book appointment
     bookBtn.addEventListener('click', function () {
         const selectedVaccines = Array.from(document.querySelectorAll('.vaccineCheck:checked')).map(cb => cb.value);
@@ -41,16 +44,17 @@
         );
 
         paidHospitalsColumn.innerHTML = '<h2>Paid Hospitals</h2>' + paidFiltered.map(h => `
-            <p><strong>${h.hos_name}</strong><br>Email: ${h.hos_email}<br>Phone: ${h.hos_phone}</p><hr>
+            <p><strong>${h.hos_name}</strong></p><hr>
         `).join('');
 
         freeHospitalsColumn.innerHTML = '<h2>Free Hospitals</h2>' + freeFiltered.map(h => `
-            <p><strong>${h.hos_name}</strong><br>Email: ${h.hos_email}<br>Phone: ${h.hos_phone}</p><hr>
+            <p><strong>${h.hos_name}</strong></p><hr>
         `).join('');
 
         hospitalSection.style.display = 'block';
     });
 
+    
     // Gemini AI query
     document.getElementById("askGemini").addEventListener("click", async () => {
         const prompt = document.getElementById("geminiPrompt").value.trim();

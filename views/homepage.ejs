@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/homepage.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" href="https://imgs.search.brave.com/5S1y-VfAkaE4yTAfgVu4eH2Dor9w2hqzh3O_6Enha94/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cG5nYWxsLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvOC9Ib3Nw/aXRhbC1QTkctRnJl/ZS1JbWFnZS5wbmc">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Special+Gothic+Expanded+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>VaxTraK</title>
+</head>
+<body>
+    <div class="topnav">
+        <div class="logo">
+            <span><i class="fa-solid fa-hospital"></i></span>
+            <span><h2>VaxTraK</h2></span>
+        </div>
+
+        <div class="functions">
+            <span>
+                <a href="#dash" class="scroll-link">Dashboard</a>
+                <a href="#track" class="scroll-link">Track Status</a>
+                <a href="#certificates" class="scroll-link">Certificates</a>
+                <a href="#travel" class="scroll-link">Travel Requirements</a>
+                <a href="#donate" class="scroll-link">Donate</a>
+                <a href="#faqs" class="scroll-link">FAQs</a>
+                <a href="#news" class="scroll-link">News</a>
+            </span>    
+        </div>
+        <div class="hamburger">
+            <span class="Login">
+                <a href="/register"><button> Login/Register</button></a>
+            </span>
+            <div class="menu-container">
+                <span>
+                    <i class="fas fa-bars hamburger-icon" onclick="toggleDropdown()"></i>
+                </span>
+                <div class="dropdown" id="menuDropdown">
+                    <div class="dropdown-item" onclick="toggleSubDropdown()">
+                      <a href="javascript:void(0)">Profile</a>
+                      <div class="sub-dropdown" id="profileSubDropdown">
+                        <a href="#">Member 1</a>
+                        <a href="#">Member 2</a>
+                        <a href="#">Member 3</a>
+                      </div>
+                    </div>
+                    <a href="#">Settings</a>
+                    <a href="#">Logout</a>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mainsection">
+            <div class="aboutus" id="dash">
+            <img src="images/Screenshot 2025-04-18 132704.png" alt="Banner" class="background-image">
+            <div class="box">
+                <h1>Welcome to VaxTrak</h1>
+                    <p class="paragraph">
+                        VaxTrak is a smart vaccination tracking platform built to make immunization easier, smarter, and more accessible for everyone. 
+                        Our mission is to ensure that no one misses a crucial vaccine due to lack of awareness or proper tracking—especially in rural and
+                        underserved communities. Designed for both citizens and healthcare workers, VaxTrak helps users manage vaccination schedules, 
+                        get timely reminders, and store digital certificates with ease. Healthcare workers can monitor vaccine coverage, upload data in bulk, 
+                        and track outreach through an intuitive dashboard. With features like OCR-based certificate scanning, AI-powered chatbot assistance, 
+                        predictive analytics, and multi-language support, VaxTrak brings technology and healthcare together in one unified platform.
+                        Whether you're a parent tracking your child’s vaccines or a frontline worker managing a village-wide campaign, VaxTrak is here to 
+                        support a safer, healthier future for all.
+                    </p>
+            </div>
+        </div>
+        <div class="graph">
+            <h1>Why Vaccines Matter?</h1>
+
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-icon">🛡️</div>
+                        <h3>Immunity Boost</h3>
+                        <p>Vaccines prepare your body to fight off diseases before you even encounter them.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🏥</div>
+                        <h3>Prevents Hospitalization</h3>
+                        <p>Reduces severity and helps prevent severe illness, saving healthcare resources.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🌍</div>
+                        <h3>Community Safety</h3>
+                        <p>Contributes to herd immunity, protecting vulnerable people around you.</p>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="benefitChart"></canvas>
+                </div>
+
+        </div>
+        <div class="steps">
+            <h1>Get Vaccinated in 3 Easy Steps</h1>
+                    <div class="container">
+                        <div class="card">
+                            <div class="step-header">Step 1</div>
+                            <img src="images/shutterstock_1930285112.jpg" alt="Step 1" />
+                            <div class="card-body">
+                                Book an Appointment on VaxTraK
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="step-header">Step 2</div>
+                            <img src="images/Vaccinations_hero.jpg" alt="Step 2" />
+                            <div class="card-body">
+                                Get Your Vaccination Safely at the Time of Your Appointment
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="step-header">Step 3</div>
+                            <img src="images/sup_download_processing_laptop_hands.jpg" alt="Step 3" />
+                            <div class="card-body">
+                                Download Your Vaccination Certificate
+                            </div>
+                        </div>
+                    </div>
+        </div>
+        <div class="trackstatus">
+            <div class="section">
+                <div class="image-container">
+                    <img src="images/Screenshot 2025-04-16 210158.png" alt="">
+                </div>
+                <div class="content" id="track">
+                  <h1>Track Vaccination Status</h1>
+                  <p>Stay updated with your vaccination progress based on your age group and eligibility. This section helps you monitor completed doses, upcoming schedules, and book appointments with ease. Never miss a dose—your health timeline, always on track.</p>
+                  <a href="/track"><button>TRACK STATUS</button></a>
+                </div>
+              </div>
+            
+              <div class="section">
+                <div class="image-container" id="certificates">
+                    <img src="images/Screenshot 2025-04-18 132837.png" alt="">
+                </div>
+                <div class="content">
+                    <h1>Your Certificates</h1>
+                    <p>All your vaccination certificates are securely stored here. You can view, download, or share them anytime as proof of immunization. Stay organized and up-to-date with your vaccine records in one convenient place.</p>
+                    <button>VIEW CERTIFICATES</button>
+                </div>
+              </div>
+            
+              <div class="section" id="travel">
+                <div class="image-container ">
+                    <img src="images/2021-04-14-mixnews-50742388251_5751f8322a_c.jpg" alt="">
+                </div>
+                <div class="content">
+                   <h1>Travel Requirements</h1>
+                   <p>Planning an international trip? This section provides a comprehensive list of vaccines required or recommended for entry into different countries. Stay informed about health regulations and ensure you’re travel-ready with the right immunizations.</p>
+                   <button>KNOW MORE</button>
+                </div>
+              </div>
+
+              <div class="section" id="donate">
+                <div class="image-container">
+                    <img src="images/2021-04-14-mixnews-50742388251_5751f8322a_c.jpg" alt="">
+                </div>
+                <div class="content">
+                    <h1>Support Us</h1>
+                    <p>Your contribution helps us improve vaccination awareness, accessibility, and health tracking for everyone. Every donation, big or small, fuels our efforts to build a healthier and safer future. Join us in making a difference—because every shot counts.</p>
+                    <button>DONATE</button>
+                </div>
+              </div>
+        </div>
+    </div>
+
+    <section class="faq-page" id="faqs">
+        <div class="faq-container">
+          <!-- Left side animation/illustration -->
+          <div class="left-content">
+            <div class="animation-container">
+              <div class="animation-element pulse-circle"></div>
+              <div class="animation-element shield">
+                <div class="shield-icon">
+                  <div class="shield-top"></div>
+                  <div class="shield-plus">+</div>
+                </div>
+              </div>
+              <div class="info-text">
+                <h3>Vaccine Information</h3>
+                <p>Understanding vaccines is important for your health. Find answers to common questions about vaccines here.</p>
+                <div class="info-dots">
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Right side FAQ content -->
+          <div class="right-content">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            
+            <div class="faq-items">
+              <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                  What is a vaccine and how does it work?
+                  <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                  A vaccine helps your body develop immunity to a disease by mimicking an infection. It stimulates your immune system to produce antibodies.
+                </div>
+              </div>
+              
+              <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                  Are vaccines safe?
+                  <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                  Yes, vaccines undergo rigorous testing in clinical trials and are constantly monitored for safety after approval by health authorities.
+                </div>
+              </div>
+              
+              <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                  Do vaccines have side effects?
+                  <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                  Most side effects are minor, like a sore arm or mild fever, and go away quickly. Serious side effects are very rare.
+                </div>
+              </div>
+              
+              <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                  Can I still get the disease after vaccination?
+                  <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                  No vaccine is 100% effective, but vaccinated people are much less likely to get sick. If they do, the illness is usually milder.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <div class="news-container" id="news">
+        <div class="head">
+            <h1>
+                Latest News on Vaccines
+            </h1>
+        </div>
+        <button class="arrow-button arrow-left" onclick="prevNews()">&#8249;</button>
+        <div class="news-slider" id="news-slider"></div>
+        <button class="arrow-button arrow-right" onclick="nextNews()">&#8250;</button>
+    </div>
+
+    <div class="chatbot">
+        <button class="chatbot-button" title="Chat" onclick="toggleChat()">
+            <span><i class="fa-regular fa-comments"></i></span>
+        </button>
+        <!-- Chat Popup -->
+        <div class="chat-popup" id="chatPopup">
+          <div class="chat-header">
+            ChatBot
+            <button onclick="toggleChat()">✖</button>
+          </div>
+          <div class="chat-body" id="chatBody">
+            <p><strong>Bot:</strong> Hello! Need help?</p>
+          </div>
+          <div class="chat-footer">
+            <input type="text" id="chatInput" placeholder="Type a message...">
+            <button onclick="sendChat()">Send</button>
+          </div>
+        </div>
+    </div>
+
+    <div class="footersection">
+        <div class="footer">
+            <div class="footerlinks">
+                <div class="column">
+                    <div>Vaccination Services</div>
+                    <ul class="columnlink">
+                        <li><a href="">Register Members</a></li>
+                        <li><a href="">Search Vaccination Centers</a></li>
+                        <li><a href="">Book Vaccination Slots</a></li>
+                        <li><a href="">Manage Appointments</a></li>
+                        <li><a href="">Download Certificate</a></li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <div>Platforms</div>
+                    <ul class="columnlink">
+                        <li><a href="">VAccinator </a></li>
+                        <li><a href="">Department Login</a></li>
+                        <li><a href="">VErify CErtificates</a></li>
+                        <li><a href="">VAccination Statistics</a></li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <div>Resources</div>
+                    <ul class="columnlink">
+                        <li><a href="">How to get Vaccinated</a></li>
+                        <li><a href="">Dos and Don'ts</a></li>
+                        <li><a href="">Overview</a></li>
+                        <li><a href="">API Guidelines</a></li>
+                        <li><a href="">Open API's</a></li>
+                        <li><a href="">Grievance Guidelines</a></li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <div>Support</div>
+                    <ul class="columnlink">
+                        <li><a href="">Frequently Asked Questions</a></li>
+                        <li><a href="">Certificate Corrections</a></li>
+                    </ul>
+                    <div>Contact Us</div>
+                    <ul class="columnlink">
+                        <li><a href="">Helpline: +91 65165168181</a></li>
+                        <li><a href="">Technical Helpline: +91 65748458151</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="socials">
+               <div>
+                <i class="fa-brands fa-facebook"></i>
+                <i class="fa-brands fa-twitter"></i>
+                <i class="fa-brands fa-instagram"></i>
+               </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/javascripts/vac.js"></script>
+    <script src="/javascripts/graph.js"></script>
+    <script src="/javascripts/news.js"></script>
+    <script src="/javascripts/faq.js"></script>
+    <script src="/javascripts/ham.js"></script>
+</body>
+</html>

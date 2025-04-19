@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vaccine Status Tracker</title>
+  <link rel="stylesheet" href="/stylesheets/track_status.css" />
+</head>
+<body>
+  <!-- Empty Top Nav / Placeholder -->
+  <header>
+    <!-- Reserved for Nav Bar (Currently Empty) -->
+  </header>
+
+  <!-- Vaccine Tracker Section -->
+  <main class="main-grid">
+    <!-- Left: Vaccine Tracker Section -->
+    <section class="vaccine-tracker-section">
+      <h1>Vaccine Status Tracker</h1>
+    
+      <!-- Family Member Selector -->
+      <div class="family-select">
+        <label for="family">Select Family Member:</label>
+        <select id="memberSelect">
+          <option value="" disabled selected>Select a member</option>
+          <% extract_member.forEach(function(member, index) { %>
+            <option value="<%= index %>"><%= member.name %></option>
+          <% }) %>
+      </select>
+      </div>
+      
+    <!-- Vaccine Group Cards Here -->
+      <div class="tracker-section">
+        <div class="group-card">
+          <h2>0 - 5 Years</h2>
+          <label><input type="checkbox" class="vaccineCheck"> BCG</label>
+          <label><input type="checkbox" class="vaccineCheck"> Hepatitis B</label>
+          <label><input type="checkbox" class="vaccineCheck"> DTP</label>
+          <label><input type="checkbox" class="vaccineCheck"> Polio</label>
+        </div>
+    
+        <div class="group-card">
+          <h2>6 - 18 Years</h2>
+          <label><input type="checkbox" class="vaccineCheck"> MMR</label>
+          <label><input type="checkbox" class="vaccineCheck"> Tdap</label>
+          <label><input type="checkbox" class="vaccineCheck"> HPV</label>
+        </div>
+    
+        <div class="group-card">
+          <h2>Adult (18+)</h2>
+          <label><input type="checkbox" class="vaccineCheck"> COVID-19</label>
+          <label><input type="checkbox" class="vaccineCheck"> Flu Shot</label>
+          <label><input type="checkbox" class="vaccineCheck"> Hepatitis A</label>
+          <label><input type="checkbox" class="vaccineCheck"> Typhoid</label>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Right: Appointment Booking Section -->
+    <aside class="appointment-section">
+      <h2>Book Appointment</h2>
+  
+      <label for="date">Select Date:</label>
+      <input type="date" id="date" />
+  
+      <label for="time">Select Time Slot:</label>
+      <select id="time">
+        <option value="">-- Select Time Slot --</option>
+        <option value="9AM">9:00 AM</option>
+        <option value="11AM">11:00 AM</option>
+        <option value="2PM">2:00 PM</option>
+        <option value="4PM">4:00 PM</option>
+      </select>
+  
+      <a href="/hospital"><button id="confirm" onclick="confirmAppointment()">Confirm</button></a>
+      <p id="confirmationMsg"></p>
+    </aside>
+  </main>
+  
+
+  <footer>
+    <p>&copy; 2025 HealthCare India. All rights reserved.</p>
+  </footer>
+<script>
+  const members = <%- JSON.stringify(extract_member) %>;
+  const recommendedMap = <%- JSON.stringify(recommendedMap) %>;
+</script>
+  <script src="/javascripts/track_status_management.js"></script>
+  
+</body>
+
+</html>
