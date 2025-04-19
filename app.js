@@ -98,8 +98,6 @@ app.post("/added_members", async (req, res) => {
         vaccines_taken: vaccines,
         user: req.session.userId //link member to logged-in user
     });
-
-    res.redirect("/add_member");
 });
 
 app.post("/login_user", async (req, res) => {
@@ -123,14 +121,17 @@ app.get("/logout",async(req,res)=>{
     res.cookie("token","")
     res.redirect("/register")
 })
-
-app.get("/interface",async (req, res) => {
+app.get("/interface", async (req, res) => {
     if (!req.session.userId) return res.redirect("/login");
+
     const extract_member = await memberModel.find({ user: req.session.userId });
     const allHospitals = await hospitalModel.find();
     const paidHospitals = allHospitals.filter(h => h.hos_category === "Paid");
     const freeHospitals = allHospitals.filter(h => h.hos_category === "Free");
-    const vaccines = await vacModel.find();
+    const vaccines = await vacModel.find(); // contains name, minAge, maxAge
+
+    const availableVaccines = vaccines.map(v => v.name);
+
     const recommendedMap = extract_member.map(member => {
         const filtered = vaccines.filter(v => member.age >= v.minAge && member.age <= v.maxAge);
         return filtered.map(v => v.name);
@@ -140,9 +141,30 @@ app.get("/interface",async (req, res) => {
         extract_member,
         paidHospitals,
         freeHospitals,
-        recommendedMap
+        recommendedMap,
+        availableVaccines
     });
 });
+
+// app.get("/interface",async (req, res) => {
+//     if (!req.session.userId) return res.redirect("/login");
+//     const extract_member = await memberModel.find({ user: req.session.userId });
+//     const allHospitals = await hospitalModel.find();
+//     const paidHospitals = allHospitals.filter(h => h.hos_category === "Paid");
+//     const freeHospitals = allHospitals.filter(h => h.hos_category === "Free");
+//     const vaccines = await vacModel.find();
+//     const recommendedMap = extract_member.map(member => {
+//         const filtered = vaccines.filter(v => member.age >= v.minAge && member.age <= v.maxAge);
+//         return filtered.map(v => v.name);
+//     });
+
+//     res.render("interface", {
+//         extract_member,
+//         paidHospitals,
+//         freeHospitals,
+//         recommendedMap
+//     });
+// });
 //hospitals-site-to-add-their-respective-hospital
 app.post("/added_hospital",async(req,res)=>{
     let {hos_name,hos_email,hos_phone,hos_category,hos_vaccines,address_1,street,city,state,pincode}=req.body;``

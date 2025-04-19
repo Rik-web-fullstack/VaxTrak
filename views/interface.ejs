@@ -1,86 +1,945 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .container {
-            display: flex;
-            justify-content: space-between;
-            padding: 30px;
-        }
-        .column {
-            width: 45%;
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        h2 {
-            text-align: center;
-        }
-        #hospitalSection {
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Step Form</title>
+  <!-- <link rel="stylesheet" href="/stylesheets/interface.css"> -->
 </head>
 <body>
+    <style>
+        * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-    <select id="memberSelect">
-        <option value="" disabled selected>Select a member</option>
-        <% extract_member.forEach(function(member, index) { %>
-          <option value="<%= index %>"><%= member.name %></option>
-        <% }) %>
-    </select>
+    body, html {
+      height: 100%;
+      width: 100%;
+      background-color: #f0f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-    <div id="memberDataContainer">
-        <% extract_member.forEach(function(member, index) { %>
-          <div class="memberData" id="member-<%= index %>" style="display:none;">
-            <h3><%= member.name %></h3>
-            <h4>Vaccines Already Taken</h4>
-            <ul>
-              <% member.vaccines_taken.forEach(function(vaccine){ %>
-                <li><%= vaccine %></li>
-              <% }) %>
-            </ul>
-          </div>
-        <% }) %>
+    #form-wrapper {
+      display: flex;
+      flex-direction: row;
+      width: 90%;
+      max-width: 1100px;
+      background-color: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    #sidebar {
+      width: 30%;
+      background-color: #27374d;
+      color: white;
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #sidebar h2 {
+      margin-bottom: 30px;
+      text-align: center;
+      font-size: 24px;
+      color: #ffffff;
+      font-weight: 600;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    #sidebar h2:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background-color: #dde6ed;
+      border-radius: 3px;
+    }
+
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      margin-bottom: 15px;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #526d82;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      margin-right: 15px;
+      transition: all 0.3s;
+    }
+
+    .step-label {
+      margin: 8px 0;
+      padding: 15px 20px;
+      border-radius: 0 30px 30px 0;
+      background-color: #394b61;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .step-label:hover {
+      background-color: #4a5d75;
+    }
+
+    .step-label.complete {
+      background-color: #3a7563;
+    }
+
+    .step-label.complete .step-number {
+      background-color: #4caf50;
+    }
+
+    .step-label.active-step {
+      background-color: #dde6ed;
+      color: #27374d;
+      font-weight: bold;
+    }
+
+    .step-label.active-step .step-number {
+      background-color: #27374d;
+      color: white;
+    }
+
+    .status-badge {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 12px;
+      background-color: #526d82;
+      color: white;
+    }
+
+    .status-complete {
+      background-color: #4caf50;
+    }
+
+    #form-container {
+      width: 70%;
+      padding: 30px;
+      transition: all 0.5s ease-in-out;
+      background-color: #ffffff;
+      position: relative;
+    }
+
+    .step {
+      display: none;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: all 0.4s ease;
+      min-height: 450px;
+    }
+
+    .active {
+      display: block;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .form-header {
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      color: #27374d;
+      font-weight: 600;
+    }
+
+    .form-subtitle {
+      color: #607d8b;
+      font-size: 14px;
+    }
+
+    label {
+      margin: 10px 0 8px;
+      color: #455a64;
+      display: block;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .form-control {
+      margin-bottom: 15px;
+      flex: 1;
+      min-width: 45%;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      transition: all 0.3s;
+      background-color: #f9fafb;
+      font-size: 15px;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #526d82;
+      box-shadow: 0 0 0 3px rgba(82, 109, 130, 0.1);
+      background-color: #ffffff;
+    }
+
+    input::placeholder {
+      color: #b0bec5;
+    }
+
+    .form-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      margin: 5px;
+      background-color: #526d82;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn:hover {
+      background-color: #27374d;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background-color: #e0e0e0;
+      color: #455a64;
+    }
+
+    .btn-secondary:hover {
+      background-color: #d5d5d5;
+    }
+
+    .btn-primary {
+      background-color: #526d82;
+    }
+
+    .btn-submit {
+      background-color: #2e7d32;
+    }
+
+    .vaccine-group {
+      margin-bottom: 20px;
+      background-color: #f9fafb;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .vaccine-group h4 {
+      margin-bottom: 15px;
+      color: #27374d;
+      font-weight: 600;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .vaccine-checkbox {
+      display: flex;
+      align-items: center;
+      background-color: #ffffff;
+      padding: 12px 15px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      border: 1px solid #e0e0e0;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .vaccine-checkbox:hover {
+      border-color: #526d82;
+      background-color: #f0f5f9;
+    }
+
+    .vaccine-checkbox input[type="checkbox"] {
+      margin-right: 12px;
+      width: 18px;
+      height: 18px;
+      accent-color: #526d82;
+    }
+
+    .preview-section {
+      margin-bottom: 20px;
+      background-color: #f9fafb;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .preview-section h4 {
+      color: #27374d;
+      margin-bottom: 12px;
+      font-weight: 600;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 8px;
+    }
+
+    .preview-item {
+      display: flex;
+      margin-bottom: 8px;
+    }
+
+    .preview-label {
+      font-weight: 500;
+      width: 120px;
+      color: #455a64;
+    }
+
+    .preview-value {
+      color: #27374d;
+      flex: 1;
+    }
+
+    .preview-list {
+      list-style: none;
+      margin-top: 10px;
+    }
+
+    .preview-list li {
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+    }
+
+    .preview-list li:before {
+      content: '✓';
+      color: #4caf50;
+      margin-right: 8px;
+      font-weight: bold;
+    }
+
+    .form-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background-color: #dde6ed;
+      width: 100%;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: #526d82;
+      width: 33.33%;
+      transition: width 0.5s ease;
+    }
+
+    /* Animation for transitions */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animated {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    /* Error styling */
+    .error {
+      border-color: #f44336 !important;
+      box-shadow: 0 0 0 1px #f44336 !important;
+    }
+
+    .error-message {
+      color: #f44336;
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+    }
+
+    @media (max-width: 992px) {
+      #form-wrapper {
+        width: 95%;
+        flex-direction: column;
+      }
+
+      #sidebar {
+        width: 100%;
+        padding: 20px 0;
+      }
+
+      .step-label {
+        border-radius: 8px;
+        margin: 5px 10px;
+      }
+
+      #form-container {
+        width: 100%;
+        padding: 25px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      #sidebar {
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 15px;
+        justify-content: space-between;
+      }
+
+      #sidebar h2 {
+        display: none;
+      }
+
+      .step-label {
+        flex: 0 0 auto;
+        padding: 10px 15px;
+        margin: 0 5px;
+        width: auto;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 8px;
+      }
+
+      .step-number {
+        margin-right: 0;
+        margin-bottom: 5px;
+      }
+
+      .status-badge {
+        margin-top: 5px;
+        font-size: 10px;
+      }
+
+      .form-control {
+        min-width: 100%;
+      }
+
+      .input-group {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .form-buttons {
+        flex-direction: column-reverse;
+        gap: 10px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+    </style>
+    
+  <div id="form-wrapper">
+    <div id="sidebar">
+      <h2>Registration Form</h2>
+      <div class="step-label active-step" id="label1" onclick="goToStep(1)">
+        <div class="step-number">1</div>
+        <span>Personal Info</span>
+        <span class="status-badge" id="status1">Pending</span>
+      </div>
+      <div class="step-label" id="label2" onclick="goToStep(2)">
+        <div class="step-number">2</div>
+        <span>Vaccine Info</span>
+        <span class="status-badge" id="status2">Pending</span>
+      </div>
+      <div class="step-label" id="label3" onclick="goToStep(3)">
+        <div class="step-number">3</div>
+        <span>Preview</span>
+        <span class="status-badge" id="status3">Pending</span>
+      </div>
     </div>
-<!-- vaccines recommended-->
-<div id="recommendedVaccinesContainer">
-    <h4>Vaccines recommended</h4>
-    <div id="recommendedVaccines"></div>
-</div>
 
-<br>
-<button id="bookBtn">Book appointment</button>
+    <form action="/added_members" method="post"> 
 
-    <!-- Hidden Hospital Section -->
-    <div id="hospitalSection" style="display: none;">
-        <div class="container">
-            <div class="column" id="paidHospitalsColumn">
-                <h2>Paid Hospitals</h2>
-            </div>
-            <div class="column" id="freeHospitalsColumn">
-                <h2>Free Hospitals</h2>
-            </div>
+
+    <div id="form-container" >
+      <div class="form-progress">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+
+      <div id="step1" class="step active" >
+        <div class="form-header">
+          <h2>Personal Information</h2>
+          <p class="form-subtitle">Please fill in your basic details</p>
         </div>
+
+            
+        <div class="form-control">
+          <label for="name">Full Name:</label>
+          <input name="name" type="text" id="name" placeholder="Enter your full name" required />
+          <p class="error-message" id="name-error">Please enter your name</p>
+        </div>
+        
+        <div class="input-group">
+          <div class="form-control">
+            <label for="age">Age:</label>
+            <input name="age" type="number" id="age" placeholder="Your age" min="0" max="120" required />
+            <p class="error-message" id="age-error">Please enter a valid age</p>
+          </div>
+          <div class="form-control">
+            <label for="gender">Gender:</label>
+            <select name="gender" id="gender" required>
+              <option value="" disabled selected>Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <p class="error-message" id="gender-error">Please select your gender</p>
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <div class="form-control">
+            <label for="flatno">Flat/House No.:</label>
+            <input name="building" type="text" id="flatno" placeholder="Flat or house number" />
+            <p class="error-message" id="flatno-error">Please enter your flat no.</p>
+          </div>
+          <div class="form-control">
+            <label for="locality">Locality:</label>
+            <input name="street" type="text" id="locality" placeholder="Your area/locality" required />
+            <p class="error-message" id="locality-error">Please enter your locality</p>
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <div class="form-control">
+            <label for="city">City:</label>
+            <input name="city" type="text" id="city" placeholder="Your city" required />
+            <p class="error-message" id="city-error">Please enter your city</p>
+          </div>
+          <div class="form-control">
+            <label for="state">State:</label>
+            <input name="state" type="text" id="state" placeholder="Your state" required />
+            <p class="error-message" id="state-error">Please enter your state</p>
+          </div>
+        </div>
+        
+        <div class="form-control">
+          <label for="pincode">Pincode:</label>
+          <input name="pincode" type="text" id="pincode" placeholder="6-digit pincode" pattern="[0-9]{6}" required />
+          <p class="error-message" id="pincode-error">Please enter a valid 6-digit pincode</p>
+        </div>
+        
+        
+        <div class="form-buttons">
+          <div></div> <!-- Empty div for spacing -->
+          <button type="button" class="btn btn-primary" onclick="validateStep1()">Next Step <span style="margin-left:5px;">→</span></button>
+        </div>
+      </div>
+
+      <div id="step2" class="step">
+        <div class="form-header">
+          <h2>Vaccine Information</h2>
+          <p class="form-subtitle">Select the vaccines you've received</p>
+        </div>
+
+
+
+        <div class="vaccine-group">
+          <h4>Age Group: 0-5 years</h4>
+          <label class="vaccine-checkbox">
+            <input type="checkbox" name="vaccines" value="Polio" class="vaccine-0-5" />
+            Polio (OPV/IPV)
+          </label>
+          <label class="vaccine-checkbox">
+            <input type="checkbox" name="vaccines" value="Hepatitis B" class="vaccine-0-5" />
+            Hepatitis B
+          </label>
+          <label class="vaccine-checkbox">
+            <input type="checkbox" name="vaccines" value="DTP" class="vaccine-0-5" />
+            DTP (Diphtheria, Tetanus, Pertussis)
+          </label>
+        </div>
+        
+        <div class="vaccine-group">
+          <h4>Age Group: 6-12 years</h4>
+          <label class="vaccine-checkbox">
+            <input type="checkbox" name="vaccines" value="MMR" class="vaccine-6-12" />
+            MMR (Measles, Mumps, Rubella)
+          </label>
+          <label class="vaccine-checkbox">
+            <input type="checkbox" name="vaccines" value="Varicella" class="vaccine-6-12" />
+            Varicella (Chickenpox)
+          </label>
+        </div>
+        
+        <div class="vaccine-group">
+          <h4>Age Group: 13+ years</h4>
+          <label class="vaccine-checkbox">
+            <input type="checkbox" name="vaccines" value="HPV" class="vaccine-13+" />
+            HPV (Human Papillomavirus)
+          </label>
+          <label class="vaccine-checkbox">
+            <input type="checkbox" name="vaccines" value="Tdap" class="vaccine-13+" />
+            Tdap (Tetanus, Diphtheria, Pertussis booster)
+          </label>
+          <label class="vaccine-checkbox">
+            <input type="checkbox" name="vaccines" value="COVID-19" class="vaccine-13+" />
+            COVID-19
+          </label>
+        </div>
+        
+        
+        <div class="form-buttons">
+          <button class="btn btn-secondary" onclick="prevStep(2)"><span style="margin-right:5px;">←</span> Previous</button>
+          <button type="button" class="btn btn-primary" onclick="validateStep2()">Next Step <span style="margin-left:5px;">→</span></button>
+        </div>
+      </div>
+
+      <div id="step3" class="step">
+        <div class="form-header">
+          <h2>Review Your Information</h2>
+          <p class="form-subtitle">Please verify all details before submission</p>
+        </div>
+        
+
+        <div class="preview-section">
+          <h4>Personal Details</h4>
+          <div class="preview-item">
+            <div class="preview-label">Name:</div>
+            <div class="preview-value" id="preview-name">-</div>
+          </div>
+          <div class="preview-item">
+            <div class="preview-label">Age:</div>
+            <div class="preview-value" id="preview-age">-</div>
+          </div>
+          <div class="preview-item">
+            <div class="preview-label">Gender:</div>
+            <div class="preview-value" id="preview-gender">-</div>
+          </div>
+        </div>
+        
+        <div class="preview-section">
+          <h4>Contact Details</h4>
+          <div class="preview-item">
+            <div class="preview-label">Address:</div>
+            <div class="preview-value" id="preview-address">-</div>
+          </div>
+          <div class="preview-item">
+            <div class="preview-label">City:</div>
+            <div class="preview-value" id="preview-city">-</div>
+          </div>
+          <div class="preview-item">
+            <div class="preview-label">State:</div>
+            <div class="preview-value" id="preview-state">-</div>
+          </div>
+          <div class="preview-item">
+            <div class="preview-label">Pincode:</div>
+            <div class="preview-value" id="preview-pincode">-</div>
+          </div>
+        </div>
+        
+        <div class="preview-section">
+          <h4>Selected Vaccines</h4>
+          <ul class="preview-list" id="preview-vaccines">
+            <li>No vaccines selected</li>
+          </ul>
+        </div>
+
+        <div class="form-buttons">
+          <button class="btn btn-secondary" onclick="prevStep(3)"><span style="margin-right:5px;">←</span> Previous</button>
+          <button type="submit" class="btn btn-submit" onclick="submitForm()">Submit Registration</button>
+        </div>
+
+      </div>
     </div>
 
-    <div>
-        <input type="text" id="geminiPrompt" placeholder="Ask about vaccines or healthcare...">
-        <button id="askGemini">Ask Gemini</button>
-    </div>
-    <div id="geminiResponse" style="margin-top: 20px; font-weight: bold;"></div>
+    </form>
+  </div>
+
+  <script>
+
+function updateProgressBar(step) {
+      const progressBar = document.getElementById('progress-bar');
+      const percent = ((step - 1) / 2) * 100;
+      progressBar.style.width = `${percent}%`;
+    }
+
+  // Make server data available to client-side JS
+  window.availableVaccines = <%- JSON.stringify(availableVaccines) %>;
+
+  const vaccineGroups = {
+    "0-5 years": ["Polio", "Hepatitis B", "DTP"],
+    "6-12 years": ["MMR", "Varicella"],
+    "13+ years": ["HPV", "Tdap", "COVID-19"]
+  };
+
+  function renderVaccines() {
+    const container = document.getElementById("vaccine-section");
+    container.innerHTML = "";
+
+    for (const [ageGroup, vaccines] of Object.entries(vaccineGroups)) {
+      const groupDiv = document.createElement("div");
+      groupDiv.className = "vaccine-group";
+
+      const header = document.createElement("h4");
+      header.textContent = `Age Group: ${ageGroup}`;
+      groupDiv.appendChild(header);
+
+      vaccines.forEach(vaccine => {
+        if (window.availableVaccines.includes(vaccine)) {
+          const label = document.createElement("label");
+          label.className = "vaccine-checkbox";
+          label.innerHTML = `
+            <input type="checkbox" name="vaccines" value="${vaccine}" class="vaccine-${ageGroup}" />
+            ${vaccine}
+          `;
+          groupDiv.appendChild(label);
+        }
+      });
+
+      container.appendChild(groupDiv);
+    }
+  }
+
+  window.onload = renderVaccines;
+
+
+    // Form data object to store all information
+    const formData = {
+      personalInfo: {},
+      vaccines: []
+    };
+    
+    // Function to validate Step 1
+    function validateStep1() {
+      const requiredFields = ['name', 'age', 'gender', 'locality', 'city', 'state', 'pincode'];
+      let isValid = true;
+      
+      // Reset all error states
+      document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('input, select').forEach(el => el.classList.remove('error'));
+      
+      // Validate each required field
+      requiredFields.forEach(field => {
+        const element = document.getElementById(field);
+        if (!element || !element.value.trim()) {
+          isValid = false;
+          element.classList.add('error');
+          const errorElement = document.getElementById(`${field}-error`);
+          if (errorElement) errorElement.style.display = 'block';
+        }
+      });
+      
+      // Additional validation for pincode (6 digits)
+      const pincodeElement = document.getElementById('pincode');
+      if (pincodeElement && pincodeElement.value && !/^\d{6}$/.test(pincodeElement.value)) {
+        isValid = false;
+        pincodeElement.classList.add('error');
+        document.getElementById('pincode-error').style.display = 'block';
+      }
+      
+      // Store data if valid
+      if (isValid) {
+        formData.personalInfo = {
+          name: document.getElementById('name').value,
+          age: document.getElementById('age').value,
+          gender: document.getElementById('gender').value,
+          flatNo: document.getElementById('flatno').value,
+          locality: document.getElementById('locality').value,
+          city: document.getElementById('city').value,
+          state: document.getElementById('state').value,
+          pincode: document.getElementById('pincode').value
+        };
+        
+        markComplete(1);
+        nextStep(1);
+        updateProgressBar(2);
+      }
+    }
+    
+    // Function to validate Step 2
+    function validateStep2() {
+      // Check if at least one vaccine is selected
+      const vaccines = document.querySelectorAll('input[name="vaccines"]:checked');
+      formData.vaccines = Array.from(vaccines).map(v => v.value);
+      
+      markComplete(2);
+      nextStep(2);
+      updateProgressBar(3);
+      populatePreview();
+    }
+    
+    // Function to populate the preview page
+    function populatePreview() {
+      document.getElementById('preview-name').textContent = formData.personalInfo.name || '-';
+      document.getElementById('preview-age').textContent = formData.personalInfo.age || '-';
+      document.getElementById('preview-gender').textContent = formData.personalInfo.gender || '-';
+      
+      // Format address
+      const addressParts = [
+        formData.personalInfo.flatNo,
+        formData.personalInfo.locality
+      ].filter(Boolean);
+      document.getElementById('preview-address').textContent = addressParts.join(', ') || '-';
+      
+      document.getElementById('preview-city').textContent = formData.personalInfo.city || '-';
+      document.getElementById('preview-state').textContent = formData.personalInfo.state || '-';
+      document.getElementById('preview-pincode').textContent = formData.personalInfo.pincode || '-';
+      
+      // Display selected vaccines
+      const vaccinesList = document.getElementById('preview-vaccines');
+      if (formData.vaccines.length > 0) {
+        vaccinesList.innerHTML = '';
+        formData.vaccines.forEach(vaccine => {
+          const li = document.createElement('li');
+          li.textContent = vaccine;
+          vaccinesList.appendChild(li);
+        });
+      } else {
+        vaccinesList.innerHTML = '<li>No vaccines selected</li>';
+      }
+    }
+    
+    function nextStep(current) {
+      changeStep(current, current + 1);
+    }
+
+    function prevStep(current) {
+      changeStep(current, current - 1);
+      
+      // Update progress bar when going back
+      updateProgressBar(current - 1);
+    }
+
+    function changeStep(current, next) {
+      document.getElementById(`step${current}`).classList.remove('active');
+      document.getElementById(`step${next}`).classList.add('active');
+      document.getElementById(`step${next}`).classList.add('animated');
+
+      document.getElementById(`label${current}`).classList.remove('active-step');
+      document.getElementById(`label${next}`).classList.add('active-step');
+      
+      // Remove animation class after animation completes
+      setTimeout(() => {
+        document.getElementById(`step${next}`).classList.remove('animated');
+      }, 500);
+    }
+
+    function goToStep(step) {
+      // Only allow navigation to completed steps or next incomplete step
+      const currentActive = document.querySelector('.step.active').id.replace('step', '');
+      const isCompleted = document.getElementById(`label${step}`).classList.contains('complete');
+      
+      if (step <= currentActive || isCompleted || step <= getCurrentCompleteStep() + 1) {
+        for (let i = 1; i <= 3; i++) {
+          document.getElementById(`step${i}`).classList.remove('active');
+          document.getElementById(`label${i}`).classList.remove('active-step');
+        }
+        document.getElementById(`step${step}`).classList.add('active');
+        document.getElementById(`step${step}`).classList.add('animated');
+        document.getElementById(`label${step}`).classList.add('active-step');
+        
+        updateProgressBar(step);
+      }
+    }
+    
+    function getCurrentCompleteStep() {
+      let lastComplete = 0;
+      for (let i = 1; i <= 3; i++) {
+        if (document.getElementById(`label${i}`).classList.contains('complete')) {
+          lastComplete = i;
+        }
+      }
+      return lastComplete;
+    }
+
+    function markComplete(step) {
+      document.getElementById(`label${step}`).classList.add('complete');
+      document.getElementById(`status${step}`).textContent = 'Complete';
+      document.getElementById(`status${step}`).classList.add('status-complete');
+    }
+    
     
 
-    <a href="/logout">logout</a>
-    <script>
-    const members = <%- JSON.stringify(extract_member) %>;
-    const allHospitals = <%- JSON.stringify(paidHospitals.concat(freeHospitals)) %>;
-    const recommendedMap = <%- JSON.stringify(recommendedMap) %>;
-    </script>
+    function submitForm() {
+      markComplete(3);
+      
+      // Here you would typically send the data to your server
+      // For demo purposes, we'll just show an alert
+      alert('Registration submitted successfully!');
+      
+      // You could redirect to a thank you page
+      // window.location.href = 'thank-you.html';
+      
+      // Or reset form for another submission
+      // resetForm();
+    }
     
-    <script src="/javascripts/interface_management.js"></script>
+    function resetForm() {
+      // Reset form data
+      formData.personalInfo = {};
+      formData.vaccines = [];
+      
+      // Clear inputs
+      document.querySelectorAll('input').forEach(input => {
+        if (input.type === 'checkbox') {
+          input.checked = false;
+        } else {
+          input.value = '';
+        }
+      });
+      
+      document.querySelectorAll('select').forEach(select => {
+        select.selectedIndex = 0;
+      });
+      
+      // Reset status
+      for (let i = 1; i <= 3; i++) {
+        document.getElementById(`label${i}`).classList.remove('complete');
+        document.getElementById(`status${i}`).textContent = 'Pending';
+        document.getElementById(`status${i}`).classList.remove('status-complete');
+      }
+      
+      // Go to step 1
+      goToStep(1);
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set initial progress
+      updateProgressBar(1);
+    });
+  </script>
 </body>
 </html>
