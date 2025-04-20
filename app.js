@@ -16,10 +16,31 @@ const userModel=require("./models/user-model.js")
 const memberModel=require("./models/member-model.js")
 const hospitalModel=require("./models/hospital-model.js")
 const vacModel=require("./models/vaccine_collection-model.js")
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "uploads/"); // ensure the folder exists
+    },
+    filename: function (req, file, cb) {
+        const uniqueName = Date.now() + "-" + file.originalname;
+        cb(null, uniqueName);
+    }
+});
+
+const fileFilter = function (req, file, cb) {
+    if (file.mimetype === "application/pdf") cb(null, true);
+    else cb(new Error("Only PDF files are allowed"), false);
+};
+
+const upload = multer({ storage, fileFilter });
+
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.set("view engine","ejs")
 app.use(express.static(path.join(__dirname,"public")))
+app.use("/uploads", express.static("uploads"));
+
 const session = require('express-session');
 
 app.use(session({
@@ -40,18 +61,44 @@ app.get("/",(req,res)=>{
 app.get("/register",(req,res)=>{
     res.render("register_user")
 })
-
+app.get("/homepage2",(req,res)=>{
+    res.render("homepage2")
+})
+app.get("/get_certificate",async(req,res)=>{
+    const extract_member = await memberModel.find({ user: req.session.userId });
+    const vaccines = await vacModel.find();
+    const recommendedMap = extract_member.map(member => {
+        const filtered = vaccines.filter(v => member.age >= v.minAge && member.age <= v.maxAge);
+        return filtered.map(v => v.name);
+    });
+    res.render("get_certificate",{ extract_member,recommendedMap})
+})
 app.get("/homepage",(req,res)=>{
     res.render("homepage")
 })
 
-app.get("/hospital",async(req,res)=>{
+app.get("/hospital", async (req, res) => {
+    let selectedVaccines = req.query.vaccines;
+
+    // If only one vaccine is selected, req.query.vaccines will be a string
+    if (!Array.isArray(selectedVaccines)) {
+        selectedVaccines = [selectedVaccines];
+    }
+
     const allHospitals = await hospitalModel.find();
-    const paidHospitals = allHospitals.filter(h => h.hos_category === "Paid");
-    const freeHospitals = allHospitals.filter(h => h.hos_category === "Free");
-    res.render("hospitals",{paidHospitals,
-        freeHospitals,})
-})
+
+    const paidHospitals = allHospitals.filter(h =>
+        h.hos_category === "Paid" &&
+        h.Vaccine_available.some(v => selectedVaccines.includes(v))
+    );
+    const freeHospitals = allHospitals.filter(h =>
+        h.hos_category === "Free" &&
+        h.Vaccine_available.some(v => selectedVaccines.includes(v))
+    );
+
+    res.render("hospitals", { paidHospitals, freeHospitals });
+});
+
 
 app.get("/track", async (req, res) => {
     if (!req.session.userId) return res.redirect("register");
@@ -124,8 +171,27 @@ app.post("/added_members", async (req, res) => {
         vaccines_taken: vaccines,
         user: req.session.userId //link member to logged-in user
     });
-    res.redirect("homepage")
+    res.redirect("register")
 });
+
+app.post("/upload-document/:memberId", upload.single("pdf"), async (req, res) => {
+    const memberId = req.params.memberId;
+
+    if (!req.file) {
+        return res.status(400).send("No file uploaded or not a PDF.");
+    }
+
+    const documentPath = "/uploads/" + req.file.filename;
+
+    try {
+        await memberModel.findByIdAndUpdate(memberId, { document: documentPath });
+        res.redirect("/interface");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error uploading document");
+    }
+});
+
 
 app.post("/login_user", async (req, res) => {
     const check_user = await userModel.findOne({ email: req.body.email });
@@ -135,7 +201,7 @@ app.post("/login_user", async (req, res) => {
         }
         if (result) {
             req.session.userId = check_user._id;
-            return res.redirect("homepage");
+            return res.redirect("homepage2");
         } else {
             return res.send("Incorrect password");
         }
@@ -146,7 +212,7 @@ app.post("/login_user", async (req, res) => {
 
 app.get("/logout",async(req,res)=>{
     res.cookie("token","")
-    res.redirect("/register")
+    res.redirect("register")
 })
 
 

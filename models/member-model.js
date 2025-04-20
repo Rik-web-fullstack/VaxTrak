@@ -11,7 +11,12 @@ const memberSchema=new mongoose.Schema({
     city:String,
     state:String,
     pincode:String,
-    vaccines_taken:[String]
+    vaccines_taken:[String],
+    document: {
+        type: String,
+        default: ""
+      }
+      
 })
 let add_member=mongoose.model("member",memberSchema)
 module.exports = add_member;

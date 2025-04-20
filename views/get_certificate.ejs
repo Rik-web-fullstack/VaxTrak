@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/get_certificate.css">
+</head>
+<body>
+    <div class="topnav">
+        <div class="logo">
+            <span><i class="fa-solid fa-hospital"></i></span>
+            <span><h2>VaxTraK</h2></span>
+        </div>
+
+        <div class="functions">
+            <span>
+                <a href="/homepage2" class="scroll-link">Dashboard</a>
+                <a href="/track" class="scroll-link">Track Status</a>
+                <a href="#certificates" class="scroll-link">Certificates</a>
+                <a href="#travel" class="scroll-link">Travel Requirements</a>
+                <a href="#donate" class="scroll-link">Donate</a>
+                <a href="#faqs" class="scroll-link">FAQs</a>
+                <a href="#news" class="scroll-link">News</a>
+            </span>    
+        </div>
+        <div class="hamburger">
+            
+            <div class="menu-container">
+                <span>
+                    <i class="fas fa-bars hamburger-icon" onclick="toggleDropdown()"></i>
+                </span>
+                <div class="dropdown" id="menuDropdown">
+                    <div class="dropdown-item" onclick="toggleSubDropdown()">
+                      <a href="javascript:void(0)">Profile</a>
+                      <div class="sub-dropdown" id="profileSubDropdown">
+                        <a href="#">Member 1</a>
+                        <a href="#">Member 2</a>
+                        <a href="#">Member 3</a>
+                      </div>
+                    </div>
+                    <a href="#">Settings</a>
+                    <a href="/logout">Logout</a>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="family-select" style="padding-top: 5%;padding-left: 20px;">
+        <label for="family">Select Family Member:</label>
+        <select id="memberSelect">
+          <option value="" disabled selected>Select a member</option>
+          <% extract_member.forEach(function(member, index) { %>
+            <option value="<%= index %>"><%= member.name %></option>
+          <% }) %>
+      </select>
+      </div>
+
+    <% extract_member.forEach(member => { %>
+        <form action="/upload-document/<%= member._id %>" method="POST" enctype="multipart/form-data">
+          <input  type="file" name="pdf" accept="application/pdf" required>
+          <button class="btn btn-primary btn-lg" type="submit" >Upload Document</button>
+        </form>
+      
+        <% if (member.document) { %>
+          <p>Document Uploaded: <a href="<%= member.document %>" target="_blank">View PDF</a></p>
+        <% } else { %>
+          <p>No document uploaded</p>
+        <% } %>
+      <% }) %>
+      
+
+      <script src="/javascripts/ham.js"></script>
+      <script>
+        const members = <%- JSON.stringify(extract_member) %>;
+        const recommendedMap = <%- JSON.stringify(recommendedMap) %>;
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+</body>
+</html>

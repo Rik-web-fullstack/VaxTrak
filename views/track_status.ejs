@@ -8,6 +8,44 @@
 </head>
 <body>
   <!-- Empty Top Nav / Placeholder -->
+  <div class="topnav">
+    <div class="logo">
+        <span><i class="fa-solid fa-hospital"></i></span>
+        <span><h2>VaxTraK</h2></span>
+    </div>
+
+    <div class="functions">
+        <span>
+            <a href="/homepage2" class="scroll-link">Dashboard</a>
+            <a href="#track" class="scroll-link">Track Status</a>
+            <a href="/get_certificate" class="scroll-link">Certificates</a>
+            <a href="#travel" class="scroll-link">Travel Requirements</a>
+            <a href="#donate" class="scroll-link">Donate</a>
+            <a href="#faqs" class="scroll-link">FAQs</a>
+            <a href="#news" class="scroll-link">News</a>
+        </span>    
+    </div>
+    <div class="hamburger">
+        <div class="menu-container">
+            <span>
+                <i class="fas fa-bars hamburger-icon" onclick="toggleDropdown()"></i>
+            </span>
+            <div class="dropdown" id="menuDropdown">
+                <div class="dropdown-item" onclick="toggleSubDropdown()">
+                  <a href="javascript:void(0)">Profile</a>
+                  <div class="sub-dropdown" id="profileSubDropdown">
+                    <a href="#">Member 1</a>
+                    <a href="#">Member 2</a>
+                    <a href="#">Member 3</a>
+                  </div>
+                </div>
+                <a href="#">Settings</a>
+                <a href="/logout">Logout</a>
+              </div>
+        </div>
+    </div>
+</div>
+
   <header>
     <!-- Reserved for Nav Bar (Currently Empty) -->
   </header>
@@ -33,25 +71,25 @@
       <div class="tracker-section">
         <div class="group-card">
           <h2>0 - 5 Years</h2>
-          <label><input type="checkbox" class="vaccineCheck"> BCG</label>
-          <label><input type="checkbox" class="vaccineCheck"> Hepatitis B</label>
-          <label><input type="checkbox" class="vaccineCheck"> DTP</label>
-          <label><input type="checkbox" class="vaccineCheck"> Polio</label>
+          <label><input type="checkbox" class="vaccineCheck" value="BCG"> BCG</label>
+          <label><input type="checkbox" class="vaccineCheck" value="Hepatitis"> Hepatitis B</label>
+          <label><input type="checkbox" class="vaccineCheck" value="DTP"> DTP</label>
+          <label><input type="checkbox" class="vaccineCheck" value="Polio"> Polio</label>
         </div>
     
         <div class="group-card">
           <h2>6 - 18 Years</h2>
-          <label><input type="checkbox" class="vaccineCheck"> MMR</label>
-          <label><input type="checkbox" class="vaccineCheck"> Tdap</label>
-          <label><input type="checkbox" class="vaccineCheck"> HPV</label>
+          <label><input type="checkbox" class="vaccineCheck" value="MMR"> MMR</label>
+          <label><input type="checkbox" class="vaccineCheck" value="Tdap"> Tdap</label>
+          <label><input type="checkbox" class="vaccineCheck" value="HPV"> HPV</label>
         </div>
     
         <div class="group-card">
           <h2>Adult (18+)</h2>
-          <label><input type="checkbox" class="vaccineCheck"> COVID-19</label>
-          <label><input type="checkbox" class="vaccineCheck"> Flu Shot</label>
-          <label><input type="checkbox" class="vaccineCheck"> Hepatitis A</label>
-          <label><input type="checkbox" class="vaccineCheck"> Typhoid</label>
+          <label><input type="checkbox" class="vaccineCheck" value="COVID-19"> COVID-19</label>
+          <label><input type="checkbox" class="vaccineCheck" value="Flu Shot"> Flu Shot</label>
+          <label><input type="checkbox" class="vaccineCheck" value="Hepatitis A"> Hepatitis A</label>
+          <label><input type="checkbox" class="vaccineCheck" value="Typhoid"> Typhoid</label>
         </div>
       </div>
     </section>
@@ -72,7 +110,7 @@
         <option value="4PM">4:00 PM</option>
       </select>
   
-      <a href="/hospital"><button id="confirm" onclick="confirmAppointment()">Confirm</button></a>
+      <button id="findHospitalsBtn" onclick="confirmAppointment()">Confirm</button>
       <p id="confirmationMsg"></p>
     </aside>
   </main>

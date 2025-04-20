@@ -9,7 +9,7 @@
 <body>
   <header>
     <nav class="navbar">
-      <h2>HealthCare Portal</h2>
+      <h2>HealthCare Portal</h2>hh
     </nav>
   </header>
 
@@ -23,7 +23,7 @@
           <h2>Free</h2>
         </div>
         <ul id="freeHospitalsColumn" class="hospital-list static-list">
-          <!-- <li onclick="selectHospital('free', 'City General Hospital')">City General Hospital</li>
+          <li onclick="selectHospital('free', 'City General Hospital')">City General Hospital</li>
           <li onclick="selectHospital('free', 'Green Valley Clinic')">Green Valley Clinic</li>
           <li onclick="selectHospital('free', 'Sunrise Public Health Center')">Sunrise Public Health Center</li>
           <li onclick="selectHospital('free', 'Riverside Government Hospital')">Riverside Government Hospital</li>
@@ -36,7 +36,7 @@
           <li onclick="selectHospital('free', 'Sunrise Community Care')">Sunrise Community Care</li>
           <li onclick="selectHospital('free', 'Pinecrest General Hospital')">Pinecrest General Hospital</li>
           <li onclick="selectHospital('free', 'Brookside Regional Clinic')">Brookside Regional Clinic</li>
-          <li onclick="selectHospital('free', 'Cedar Hill Wellness Center')">Cedar Hill Wellness Center</li> -->
+          <li onclick="selectHospital('free', 'Cedar Hill Wellness Center')">Cedar Hill Wellness Center</li>
 
         </ul>
       </div>
@@ -47,7 +47,7 @@
           <h2>Paid</h2>
         </div>
         <ul id="paidHospitalsColumn" class="hospital-list static-list">
-          <!-- <li onclick="selectHospital('paid', 'St. Mary\'s Premium Care')">St. Mary's Premium Care</li>
+          <li onclick="selectHospital('paid', 'St. Mary\'s Premium Care')">St. Mary's Premium Care</li>
           <li onclick="selectHospital('paid', 'NovaLife Private Hospital')">NovaLife Private Hospital</li>
           <li onclick="selectHospital('paid', 'Grand Medix Center')">Grand Medix Center</li>
           <li onclick="selectHospital('paid', 'Skyline Specialty Clinic')">Skyline Specialty Clinic</li>
@@ -61,14 +61,16 @@
           <li onclick="selectHospital('paid', 'MedElite Diagnostic & Surgical')">MedElite Diagnostic & Surgical</li>
           <li onclick="selectHospital('paid', 'Sunhill Private Health Center')">Sunhill Private Health Center</li>
           <li onclick="selectHospital('paid', 'Orchid International Hospital')">Orchid International Hospital</li>
-          <li onclick="selectHospital('paid', 'HarborView Medical Pavilion')">HarborView Medical Pavilion</li> -->
+          <li onclick="selectHospital('paid', 'HarborView Medical Pavilion')">HarborView Medical Pavilion</li>
         </ul>
       </div>
     </div>
 
     <button id="proceedBtn" onclick="goToPayment()" disabled>Proceed to Payment</button>
   </main>
-
+  <script>
+    const allHospitals = <%- JSON.stringify(paidHospitals.concat(freeHospitals)) %>;
+  </script>  
   <script src="/javascripts/hospital-script.js"></script>
 </body>
 </html>

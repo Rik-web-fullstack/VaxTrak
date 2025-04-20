@@ -26,6 +26,17 @@
         document.getElementById('member-' + this.value).style.display = 'block';
   });
 
+  document.getElementById("findHospitalsBtn").addEventListener("click", () => {
+    const selectedVaccines = Array.from(document.querySelectorAll('.vaccineCheck:checked')).map(cb => cb.value);
+    
+    if (selectedVaccines.length === 0) {
+      alert("Please select at least one vaccine.");
+      return;
+    }
+
+    const query = selectedVaccines.map(v => `vaccines=${encodeURIComponent(v)}`).join('&');
+    window.location.href = `/hospital?${query}`;
+  });
 
 // function confirmAppointment() {
 //     const date = document.getElementById("date").value;
